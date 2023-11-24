@@ -1,0 +1,57 @@
+
+from tkinter import *
+import random
+from tkinter import messagebox
+
+computer_score = 0
+player_score = 0
+
+
+# Function to determine the winner and update the score
+def play_game(player_choice):
+    global player_score, computer_score
+    choices = ['rock', 'paper', 'scissors']
+    computer_choice = random.choice(choices)  # random option by chosen computer
+    if player_choice == computer_choice:
+        result = "It's a tie!"
+    elif (player_choice == 'rock' and computer_choice == 'scissors') or \
+         (player_choice == 'paper' and computer_choice == 'rock') or \
+         (player_choice == 'scissors' and computer_choice == 'paper'):
+        result = "You win!"
+        player_score += 1
+    else:
+        result = "Computer wins!"
+        computer_score += 1
+
+    # To display the result and to update the  score
+    messagebox.showinfo("Result", f"Player: {player_choice}\nComputer: {computer_choice}\n\n{result}\n\nPlayer Score: {player_score}\nComputer Score: {computer_score}")
+
+    # Ask if the player wants to play again or else exit
+    play_again = messagebox.askyesno("Play Again", "Do you want to play again?")
+
+    if play_again:
+        player_score = 0      # To reset the score and play again
+        computer_score = 0
+    else:
+        window.destroy()   # Exit the game
+        thank_you = messagebox.showinfo("thanks", "thanks for your time,Bye!!")
+
+
+window = Tk()
+window.title('Rock paper Scissor')
+window.geometry('300x300')
+Icon= PhotoImage(file='RPS.png')
+window.iconphoto(True, Icon)
+window.config(background='#FAD0C1')
+label= Label(window, text="ROCK PAPER SCISSOR",font=("times new roman",15,'bold'))
+label.pack()
+
+rock_button= Button(window, text="Rock",font=("times new roman",13), command=lambda: play_game('rock'))
+rock_button.place(x=20,y=50)
+rock_button= Button(window, text="Paper",font=("times new roman",13), command=lambda: play_game('paper'))
+rock_button.place(x=120,y=50)
+rock_button= Button(window, text="Scissor",font=("times new roman",13), command=lambda: play_game('scissors'))
+rock_button.place(x=220,y=50)
+
+
+window.mainloop()
